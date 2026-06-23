@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/LedgerLite.Api/LedgerLite.Api.csproj" />
+    <Project Path="src/LedgerLite.Console/LedgerLite.Console.csproj" />
+    <Project Path="src/LedgerLite.Domain/LedgerLite.Domain.csproj" />
+  </Folder>
+</Solution>
