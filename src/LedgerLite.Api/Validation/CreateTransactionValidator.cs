@@ -3,8 +3,8 @@ using LedgerLite.Api.Validation;
 
 namespace LedgerLite.Api.Validation;
 
-// WHY: Validators encapsulate business rules for API inputs. FluentValidation
-// integrates with endpoint filters to reject invalid requests early.
+// WHY: Validators encapsulate business rules for API inputs.
+// FluentValidation rejects invalid requests early via endpoint filters.
 public class CreateTransactionValidator : AbstractValidator<CreateTransactionRequest>
 {
     public CreateTransactionValidator()

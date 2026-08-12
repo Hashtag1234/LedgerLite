@@ -1,0 +1,42 @@
+<div class="transaction-form">
+  <div class="transaction-form__header">
+    <span class="transaction-form__eyebrow">New transaction</span>
+    <h2>Add Transaction</h2>
+    <p class="transaction-form__intro">Record your income or expense quickly and keep your ledger balanced.</p>
+  </div>
+
+  <form (ngSubmit)="submit()" class="transaction-form__form" novalidate>
+    <div class="transaction-form__fields">
+      <div class="transaction-form__field">
+        <label>Description</label>
+        <input type="text" [ngModel]="description()" (ngModelChange)="description.set($event)" />
+      </div>
+
+      <div class="transaction-form__field">
+        <label>Category</label>
+        <input type="text" [ngModel]="category()" (ngModelChange)="category.set($event)" />
+      </div>
+
+      <div class="transaction-form__row">
+        <div class="transaction-form__field">
+          <label>Amount</label>
+          <input type="number" [ngModel]="amount()" (ngModelChange)="amount.set($event)" />
+        </div>
+
+        <div class="transaction-form__field">
+          <label>Type</label>
+          <select [ngModel]="type()" (ngModelChange)="type.set($event)">
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <p class="transaction-form__hint">Enter a description, choose a category, then add the value and transaction type.</p>
+
+    <div class="transaction-form__actions">
+      <button type="submit">Add Transaction</button>
+    </div>
+  </form>
+</div>

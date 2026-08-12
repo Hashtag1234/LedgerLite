@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LedgerLite.Console")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2ca397fe2b97fe3226b09744efd1db23330f31ec")]
 [assembly: System.Reflection.AssemblyProductAttribute("LedgerLite.Console")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LedgerLite.Console")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

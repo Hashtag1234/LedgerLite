@@ -9,3 +9,4 @@
 /home/ayush/code+important/LedgerLite/src/LedgerLite.Domain/obj/Debug/net10.0/refint/LedgerLite.Domain.dll
 /home/ayush/code+important/LedgerLite/src/LedgerLite.Domain/obj/Debug/net10.0/LedgerLite.Domain.pdb
 /home/ayush/code+important/LedgerLite/src/LedgerLite.Domain/obj/Debug/net10.0/ref/LedgerLite.Domain.dll
+/home/ayush/code+important/LedgerLite/src/LedgerLite.Domain/obj/Debug/net10.0/LedgerLite.Domain.sourcelink.json

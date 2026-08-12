@@ -1,0 +1,44 @@
+<div class="transaction-list">
+  <div class="transaction-list__header">
+    <span class="transaction-list__eyebrow">Transaction history</span>
+    <h2>Transactions</h2>
+    <p class="transaction-list__intro">
+      Review recent ledger entries in one place. Income and expenses are clearly labeled so you can instantly spot where cash is moving.
+    </p>
+  </div>
+
+  @if (transactions().length === 0) {
+    <div class="transaction-list__empty-state">
+      <p>No transactions yet. Add an entry to get started and see your ledger populate.</p>
+    </div>
+  } @else {
+    <div class="transaction-list__table-wrapper">
+      <table class="transaction-list__table">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Type</th>
+            <th class="transaction-list__amount">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (transaction of transactions(); track transaction.id) {
+            <tr>
+              <td>{{ transaction.description }}</td>
+              <td>
+                <span
+                  class="transaction-list__badge"
+                  [class.income]="transaction.type === 'Income'"
+                  [class.expense]="transaction.type === 'Expense'"
+                >
+                  {{ transaction.type }}
+                </span>
+              </td>
+              <td class="transaction-list__amount">{{ transaction.amount | currency }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

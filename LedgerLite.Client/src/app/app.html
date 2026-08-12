@@ -1,0 +1,23 @@
+<nav class="app-shell__nav">
+  <div class="app-shell__brand">LedgerLite</div>
+  <ul class="app-shell__links">
+    <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+    <li><a routerLink="/accounts" routerLinkActive="active">Accounts</a></li>
+    <li><a routerLink="/transactions" routerLinkActive="active">Transactions</a></li>
+  </ul>
+  <div class="app-shell__picker" *ngIf="accounts().length > 0">
+    <label for="selectedAccount">Account</label>
+    <select id="selectedAccount" #accountSelect [value]="selectedAccountId() ?? ''" (change)="onAccountChange(accountSelect.value)">
+      <option value="" disabled>Select an account</option>
+      <option *ngFor="let account of accounts()" [value]="account.id">
+        {{ account.name }} ({{ account.type }})
+      </option>
+    </select>
+  </div>
+</nav>
+<main class="app-shell__content">
+  <router-outlet />
+</main>
+
+
+

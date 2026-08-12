@@ -1,7 +1,7 @@
 namespace LedgerLite.Api.Middleware;
 
 // WHY: Correlation ID ties together logs across the entire request lifecycle.
-// This is essential for troubleshooting in production when requests are distributed.
+// This is essential for troubleshooting distributed production requests.
 public class CorrelationIdMiddleware
 {
     private readonly RequestDelegate _next;

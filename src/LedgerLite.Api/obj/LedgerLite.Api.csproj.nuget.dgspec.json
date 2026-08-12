@@ -34,6 +34,9 @@
           }
         },
         "warningProperties": {
+          "noWarn": [
+            "NU1903"
+          ],
           "warnAsError": [
             "NU1605"
           ]
@@ -63,11 +66,21 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[10.0.8, )"
+              "version": "[10.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[10.0.9, )"
             },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
-              "version": "[10.0.8, )"
+              "version": "[10.0.9, )"
+            },
+            "Microsoft.OpenApi": {
+              "target": "Package",
+              "version": "[2.7.5, )"
             },
             "Serilog": {
               "target": "Package",
@@ -101,7 +114,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/10.0.108/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/10.0.110/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
@@ -575,7 +588,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/10.0.108/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/10.0.110/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

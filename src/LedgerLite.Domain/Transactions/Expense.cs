@@ -4,6 +4,12 @@ namespace LedgerLite.Domain.Transactions;
 public sealed class Expense : Transaction
 {
     public override TransactionType Type => TransactionType.Expense;
+
+    // WHY: EF Core requires a parameterless constructor to materialize derived entity types.
+    public Expense()
+    {
+    }
+
     public Expense(
         Guid id,
         Guid accountId,
@@ -14,6 +20,4 @@ public sealed class Expense : Transaction
         : base(id, accountId, amount, category, timestamp, description)
     {
     }
-    
-    
 }

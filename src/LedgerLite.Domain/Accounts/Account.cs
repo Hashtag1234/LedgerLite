@@ -5,9 +5,9 @@ namespace LedgerLite.Domain.Accounts;
 // WHY: Account is an Entity because it has a distinct identity (Id) and its state changes over time.
 public class Account
 {
-    public Guid Id { get; }
+    public Guid Id { get; private set; }
     public string Name { get; private set; }
-    public AccountType Type { get; }
+    public AccountType Type { get; private set; }
     public Money Balance { get; private set; }
 
     // WHY: Parameterless constructor for EF Core. Don't call this directly in domain code.
@@ -44,7 +44,7 @@ public class Account
         Name = newName.Trim();
     }
 
-    // WHY: Domain methods encapsulate business rules, preventing external code from directly modifying state in invalid ways.
+    // WHY: Domain methods encapsulate business rules and prevent external code from modifying state in invalid ways.
     public void Deposit(Money amount)
     {
         if (amount.Amount <= 0)

@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace LedgerLite.Api.Middleware;
 
-// WHY: Centralized error handling returns RFC7807 ProblemDetails format for all exceptions.
+// WHY: Centralized error handling returns RFC7807 ProblemDetails for all exceptions.
 // This keeps error responses consistent and machine-readable.
 public class ErrorHandlingMiddleware
 {

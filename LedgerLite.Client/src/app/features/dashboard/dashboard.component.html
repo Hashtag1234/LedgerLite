@@ -1,0 +1,31 @@
+<div class="dashboard">
+  <section class="dashboard__hero">
+    <div class="dashboard__hero-copy">
+      <p class="dashboard__eyebrow">Financial overview</p>
+      <h1>Ledger performance at a glance</h1>
+      <p class="dashboard__intro">
+        Monitor income, expenses, and net balance in one clean dashboard. The key metrics are designed for fast decisions and effortless bookkeeping.
+      </p>
+    </div>
+    <div class="dashboard__hero-meta">
+      <span>Updated automatically as transactions are added.</span>
+    </div>
+  </section>
+
+  <div class="summary">
+    <div class="card income">
+      <div class="label">Income</div>
+      <div class="value">{{ totalIncome() | currency }}</div>
+    </div>
+
+    <div class="card expenses">
+      <div class="label">Expenses</div>
+      <div class="value">{{ totalExpenses() | currency }}</div>
+    </div>
+
+    <div class="card balance">
+      <div class="label">Balance</div>
+      <div class="value">{{ balance() | currency }}</div>
+    </div>
+  </div>
+</div>

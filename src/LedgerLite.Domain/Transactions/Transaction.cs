@@ -3,16 +3,16 @@ using LedgerLite.Domain.Enum;
 
 namespace LedgerLite.Domain.Transactions;
 
-// WHY: Transaction is an Entity because it has a unique identity (Id) and represents a distinct transaction event in the ledger.
-// WHY: abstract forces every subclass (Income, Expense) to declare their type explicitly. The compiler enforces this — you cannot create a Transaction subclass that "forgets" to say what it is.
+// WHY: Transaction is an entity because it has a unique identity (Id) and represents a distinct event in the ledger.
+// WHY: abstract ensures every subclass (Income, Expense) declares its type explicitly. The compiler prevents a Transaction subclass from omitting the type.
 public abstract class Transaction
 {
-    public Guid Id { get; }
-    public Guid AccountId { get; }
-    public Money Amount { get; }
-    public Category Category { get; }
-    public DateTimeOffset Timestamp { get; }
-    public string Description { get; } 
+    public Guid Id { get; private set; }
+    public Guid AccountId { get; private set; }
+    public Money Amount { get; private set; }
+    public Category Category { get; private set; }
+    public DateTimeOffset Timestamp { get; private set; }
+    public string Description { get; private set; }
     public abstract TransactionType Type { get; }
 
     // WHY: Parameterless constructor for EF Core. Don't call this directly in domain code.

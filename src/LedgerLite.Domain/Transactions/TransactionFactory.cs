@@ -4,8 +4,8 @@ using LedgerLite.Domain.Enum;
 
 namespace LedgerLite.Domain.Transactions;
 
-// WHY: Factory centralizes construction logic for Transaction subtypes, keeping calling code simple
-// and enforcing any invariants required when creating transactions.
+// WHY: This factory centralizes construction logic for transaction subtypes,
+// keeps calling code simple, and enforces invariants when creating transactions.
 public static class TransactionFactory
 {
     public static Transaction Create(

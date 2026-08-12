@@ -3,7 +3,7 @@ using LedgerLite.Domain.Enum;
 namespace LedgerLite.Api.Validation;
 
 // WHY: Request DTOs decouple the API contract from domain models.
-// FluentValidation validates these before hitting handlers.
+// FluentValidation validates requests before they reach the endpoint handlers.
 public record CreateTransactionRequest
 {
     public Guid AccountId { get; init; }

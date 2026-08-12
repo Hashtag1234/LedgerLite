@@ -1,0 +1,142 @@
+$bg: #f4f7fb;
+$card: #ffffff;
+$muted: #6b7280;
+$income: #10b981;
+$expense: #ef4444;
+$balance: #4f46e5;
+$accent: #2563eb;
+
+.dashboard {
+	padding: 28px;
+	background: $bg;
+	min-height: 100%;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+
+	&__hero {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 18px;
+		margin-bottom: 28px;
+		padding: 22px 24px;
+		background: rgba(255, 255, 255, 0.92);
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		border-radius: 22px;
+		box-shadow: 0 20px 45px rgba(15, 23, 42, 0.06);
+	}
+
+	&__hero-copy {
+		max-width: 720px;
+
+		.dashboard__eyebrow,
+		.dashboard__intro {
+			display: block;
+		}
+	}
+
+	.dashboard__eyebrow {
+		margin: 0 0 10px;
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: $income;
+	}
+
+	h1 {
+		margin: 0 0 10px;
+		font-size: 2.2rem;
+		line-height: 1.05;
+		color: #0f172a;
+	}
+
+	.dashboard__intro {
+		margin: 0;
+		max-width: 42rem;
+		color: $muted;
+		font-size: 1rem;
+		line-height: 1.7;
+	}
+
+	.dashboard__hero-meta {
+		font-size: 0.95rem;
+		color: $muted;
+		padding-top: 6px;
+	}
+
+	.summary {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 18px;
+
+		.card {
+			background: $card;
+			border-radius: 18px;
+			padding: 22px;
+			box-shadow: 0 10px 32px rgba(15, 23, 42, 0.08);
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			transition: transform 180ms ease, box-shadow 180ms ease;
+
+			&:hover {
+				transform: translateY(-3px);
+				box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+			}
+
+			.label {
+				color: $muted;
+				font-size: 0.95rem;
+				margin-bottom: 12px;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+			}
+
+			.value {
+				font-size: 1.8rem;
+				font-weight: 800;
+				color: #0f172a;
+			}
+		}
+
+		.card.income {
+			border-left: 5px solid $income;
+		}
+
+		.card.expenses {
+			border-left: 5px solid $expense;
+		}
+
+		.card.balance {
+			border-left: 5px solid $balance;
+		}
+	}
+}
+
+@media (max-width: 720px) {
+	.dashboard {
+		padding: 18px;
+
+		&__hero {
+			flex-direction: column;
+			padding: 18px;
+		}
+
+		.summary {
+			gap: 14px;
+		}
+	}
+}
+
+@media (max-width: 480px) {
+	.dashboard {
+		padding: 14px;
+		.dashboard__hero {
+			padding: 16px;
+		}
+
+		h1 {
+			font-size: 1.7rem;
+		}
+	}
+}

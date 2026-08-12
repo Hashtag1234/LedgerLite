@@ -5,7 +5,7 @@ using FluentValidation.Results;
 
 namespace LedgerLite.Api.Validation;
 
-// WHY: Provide a small, injectable wrapper type that endpoints can request
+// WHY: Provide a lightweight injectable wrapper type that endpoints can request
 // directly as `ValidationFilter<T>.AddEndpointFilter` while still using
 // FluentValidation under the hood.
 public class ValidationFilter<T>

@@ -1,7 +1,8 @@
 namespace LedgerLite.Domain.Common;
 
-// WHY: Money is a Value Object where equality is based on value rather than identity. A readonly record struct guarantees immutability and value-based equality.
-public readonly record struct Money
+// WHY: Money is a value object whose identity is defined by its value.
+// The record type supports immutability and value-based equality.
+public record Money
 {
     public decimal Amount { get; }
     public string Currency { get; }

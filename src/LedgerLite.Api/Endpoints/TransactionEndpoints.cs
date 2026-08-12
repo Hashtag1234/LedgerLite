@@ -4,6 +4,7 @@ using LedgerLite.Api.Validation;
 using LedgerLite.Domain.Common;
 using LedgerLite.Domain.Transactions;
 using LedgerLite.Domain.Enum;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace LedgerLite.Api.Endpoints;
@@ -22,57 +23,72 @@ public static class TransactionEndpoints
             .WithName("CreateTransaction")
             .Accepts<CreateTransactionRequest>("application/json")
             .Produces<TransactionResponse>(StatusCodes.Status201Created)
-            .Produces<ProblemDetailsResponse>(StatusCodes.Status400BadRequest);
+            .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
+            .Produces<ProblemDetails>(StatusCodes.Status404NotFound);
 
         group.MapGet("/", ListTransactions)
             .WithName("ListTransactions")
             .Produces<List<TransactionResponse>>(StatusCodes.Status200OK);
     }
 
-    // WHY: Each endpoint accepts CancellationToken to support graceful shutdown.
+    // WHY: Each endpoint accepts a CancellationToken to support graceful shutdown.
     private static async Task<IResult> CreateTransaction(
         CreateTransactionRequest request,
         ApplicationDbContext dbContext,
         ValidationFilter<CreateTransactionRequest>.AddEndpointFilter validator,
-        ILogger logger,
+        ILogger<Program> logger,
         CancellationToken cancellationToken)
     {
         // WHY: Validate the request before processing.
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)
         {
-            return Results.BadRequest(new ProblemDetailsResponse
-            {
-                Status = 400,
-                Title = "Validation failed.",
-                Detail = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage))
-            });
+            return TypedResults.Problem(
+                title: "Validation failed.",
+                detail: string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage)),
+                statusCode: StatusCodes.Status400BadRequest);
         }
 
         try
         {
-            // WHY: Load the account to verify it exists
+            // WHY: Load the account to verify it exists.
             var account = await dbContext.Accounts.FirstOrDefaultAsync(
                 a => a.Id == request.AccountId,
                 cancellationToken);
-            
 
             if (account is null)
             {
-                return Results.NotFound(new ProblemDetailsResponse
+                return TypedResults.Problem(
+                    title: "Account not found.",
+                    detail: $"Account '{request.AccountId}' does not exist.",
+                    statusCode: StatusCodes.Status404NotFound);
+            }
+
+            var unsignedMoney = new Money(request.Amount, request.Currency);
+            try
+            {
+                if (request.Type == TransactionType.Income)
                 {
-                    Status = 404,
-                    Title = "Account not found.",
-                    Detail = $"Account '{request.AccountId}' does not exist."
-                });
+                    account.Deposit(unsignedMoney);
+                }
+                else
+                {
+                    account.Withdraw(unsignedMoney);
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                logger.LogWarning("Invalid account balance operation: {Message}", ex.Message);
+                return TypedResults.Problem(
+                    title: "Invalid transaction.",
+                    detail: ex.Message,
+                    statusCode: StatusCodes.Status400BadRequest);
             }
 
             // WHY: Construct domain objects from request. Amount sign is determined by Type.
-            decimal signedAmount = request.Type == TransactionType.Income
-                ? request.Amount
-                : -request.Amount;
+          
 
-            var money = new Money(signedAmount, request.Currency);
+        
             var category = new Category(request.Category);
 
             // WHY: Use the factory to create the transaction, enforcing domain rules.
@@ -80,12 +96,12 @@ public static class TransactionEndpoints
                 request.Type,
                 Guid.NewGuid(),
                 account.Id,
-                money,
+                unsignedMoney,
                 category,
                 DateTimeOffset.UtcNow,
                 request.Description);
 
-            // WHY: EF Core tracks and persists the transaction.
+            // WHY: EF Core tracks and persists both the account change and the transaction.
             dbContext.Transactions.Add(transaction);
             await dbContext.SaveChangesAsync(cancellationToken);
 
@@ -110,12 +126,10 @@ public static class TransactionEndpoints
         catch (InvalidOperationException ex)
         {
             logger.LogWarning("Invalid transaction: {Message}", ex.Message);
-            return Results.BadRequest(new ProblemDetailsResponse
-            {
-                Status = 400,
-                Title = "Invalid transaction.",
-                Detail = ex.Message
-            });
+            return TypedResults.Problem(
+                title: "Invalid transaction.",
+                detail: ex.Message,
+                statusCode: StatusCodes.Status400BadRequest);
         }
         catch (Exception ex)
         {
@@ -135,23 +149,21 @@ public static class TransactionEndpoints
         {
             query = query.Where(t => t.AccountId == accountId.Value);
         }
+var transactions = await query
+    .Select(t => new TransactionResponse
+    {
+        Id = t.Id,
+        AccountId = t.AccountId,
+        Type = t.Type.ToString(),
+        Amount = t.Amount.Amount,
+        Currency = t.Amount.Currency,
+        Category = t.Category.Name,
+        Description = t.Description,
+        Timestamp = t.Timestamp
+    })
+    .ToListAsync(cancellationToken);
 
-        var transactions = await query
-            .OrderByDescending(t => t.Timestamp)
-            .Select(t => new TransactionResponse
-            {
-                Id = t.Id,
-                AccountId = t.AccountId,
-                Type = t.Type.ToString(),
-                Amount = t.Amount.Amount,
-                Currency = t.Amount.Currency,
-                Category = t.Category.Name,
-                Description = t.Description,
-                Timestamp = t.Timestamp
-            })
-            .ToListAsync(cancellationToken);
-
-        return Results.Ok(transactions);
+return Results.Ok(transactions.OrderByDescending(t => t.Timestamp));
     }
 }
 
@@ -167,9 +179,3 @@ public record TransactionResponse
     public DateTimeOffset Timestamp { get; init; }
 }
 
-public class ProblemDetailsResponse
-{
-    public int Status { get; set; }
-    public string? Title { get; set; }
-    public string? Detail { get; set; }
-}

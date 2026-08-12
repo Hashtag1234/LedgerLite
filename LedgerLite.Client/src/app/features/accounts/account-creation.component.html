@@ -1,0 +1,37 @@
+<div class="account-creation">
+  <div class="account-creation__header">
+    <span class="account-creation__eyebrow">New account</span>
+    <h2>Create account</h2>
+    <p class="account-creation__intro">Set up a new account to start tracking transactions immediately.</p>
+  </div>
+
+  <form (ngSubmit)="submit()" class="account-creation__form" novalidate>
+    <div class="account-creation__field">
+      <label>Name</label>
+      <input type="text" [ngModel]="name()" (ngModelChange)="name.set($event)" name="accountName" />
+    </div>
+
+    <div class="account-creation__field">
+      <label>Type</label>
+      <select [ngModel]="type()" (ngModelChange)="type.set($event)" name="accountType">
+        <option *ngFor="let accountType of accountTypes" [value]="accountType">{{ accountType }}</option>
+      </select>
+    </div>
+
+    <div class="account-creation__field">
+      <label>Initial balance</label>
+      <input type="number" [ngModel]="initialBalance()" (ngModelChange)="initialBalance.set($event)" name="initialBalance" min="0" step="0.01" />
+    </div>
+
+    <div class="account-creation__field">
+      <label>Currency</label>
+      <input type="text" [ngModel]="currency()" (ngModelChange)="currency.set($event)" name="currency" />
+    </div>
+
+    <div class="account-creation__actions">
+      <button type="submit">Create account</button>
+    </div>
+
+    <div class="account-creation__status" *ngIf="status()">{{ status() }}</div>
+  </form>
+</div>

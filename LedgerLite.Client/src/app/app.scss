@@ -1,0 +1,62 @@
+.app-shell__nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: #0f172a;
+  color: #f8fafc;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.app-shell__brand {
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.app-shell__links {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.app-shell__links a {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.app-shell__links a.active,
+.app-shell__links a:hover {
+  color: #f8fafc;
+}
+
+.app-shell__picker {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.app-shell__picker label {
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+.app-shell__picker select {
+  min-width: 220px;
+  border-radius: 0.5rem;
+  border: 1px solid #334155;
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 0.5rem 0.75rem;
+}
+
+.app-shell__content {
+  min-height: calc(100vh - 72px);
+  padding: 1.5rem;
+}

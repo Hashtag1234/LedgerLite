@@ -8,8 +8,8 @@ using LedgerLite.Domain.Enum;
 
 namespace LedgerLite.Domain.Transactions;
 
-// WHY: A simple in-memory transaction processor to demonstrate applying domain rules
-// and returning a `ProcessingResult`. This keeps Phase 0 free of external dependencies.
+// WHY: A simple in-memory transaction processor demonstrates applying domain rules
+// and returning a `ProcessingResult`, keeping Phase 0 free of external dependencies.
 public sealed class SimpleTransactionProcessor : ITransactionProcessor
 {
     private readonly IDictionary<Guid, Account> _accounts;

@@ -2,7 +2,7 @@ using System;
 
 namespace LedgerLite.Domain.Transactions;
 
-// WHY: ProcessingResult is a simple immutable result type that communicates success or failure
+// WHY: ProcessingResult is an immutable result type that communicates success or failure
 // from domain operations without relying on exceptions for control flow.
 public sealed record ProcessingResult
 {

@@ -1,7 +1,8 @@
 namespace LedgerLite.Domain.Transactions;
 
-// WHY: Category is modeled as a Value Object to enforce validation on the name and enable value-based comparison without needing an database-backed identity at this layer.
-public readonly record struct Category
+// WHY: Category is a value object that validates its name
+// and supports value-based comparison without requiring a database-backed identity.
+public record Category
 {
     public string Name { get; }
 
