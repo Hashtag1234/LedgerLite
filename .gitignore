@@ -1,0 +1,5 @@
+# Local AI agent configuration
+.agents/
+
+# Optional: keep any nested agent files out of Git as well
+.agents/**         x
